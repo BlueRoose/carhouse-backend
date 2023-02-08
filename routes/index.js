@@ -4,10 +4,12 @@ const userRouter = require("./userRouter");
 const typeRouter = require("./typeRouter");
 const brandRouter = require("./brandRouter");
 const carRouter = require("./carRouter");
+const requestRouter = require("./requestRouter");
 
 router.use("/user", userRouter);
 router.use("/type", typeRouter);
 router.use("/brand", brandRouter);
 router.use("/car", carRouter);
+router.use("/request", requestRouter)
 
 module.exports = router;
