@@ -7,7 +7,9 @@ function sortByName(cars, brands) {
   let newBrands = brands.sort((a, b) => (a.name > b.name ? 1 : -1));
   const order = [];
   newBrands.map((brand) => order.push(brand.id));
-  return cars.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+  return cars.sort(
+    (a, b) => order.indexOf(a.brandId) - order.indexOf(b.brandId)
+  );
 }
 
 const sortByPopularity = (cars) => {
@@ -72,9 +74,9 @@ class CarController {
     let endIndex = page * limit;
     let cars;
     const where = {};
+    const brands = await Brand.findAll();
 
     if (brand !== "") {
-      const brands = await Brand.findAll();
       where.brandId = brands.find((br) => br.name === brand).id;
       if (type !== "") {
         const types = await Type.findAll();

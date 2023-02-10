@@ -1,17 +1,17 @@
-const { Request } = require("../models/models");
+const { BuyRequest } = require("../models/models");
 const ApiError = require("../error/ApiError");
 const nodemailer = require("nodemailer");
 
-class RequestController {
+class BuyRequestController {
   async createRequest(req, res, next) {
     try {
-      const { name, email, subject, text } = req.body;
+      const { name, email, phone, carId } = req.body;
 
-      const request = await Request.create({
+      const request = await BuyRequest.create({
         name,
         email,
-        subject,
-        text,
+        phone,
+        carId,
       });
 
       let transporter = nodemailer.createTransport({
@@ -27,9 +27,9 @@ class RequestController {
       let result = await transporter.sendMail({
         from: "carhouseconsult@mail.ru",
         to: email,
-        subject: subject,
-        text: `Hello, dear ${name}! We receive your message and will help you as soon as we can!`,
-        html: `Hello, dear ${name}! We receive your message and will help you as soon as we can!`,
+        subject: "Your order at CarHouse",
+        text: `Hello, dear ${name}! We receive your order and will contact you as soon as we can!`,
+        html: `Hello, dear ${name}! We receive your order and will contact you as soon as we can!`,
       });
       console.log(result);
       return res.json(request);
@@ -39,9 +39,9 @@ class RequestController {
   }
 
   async getRequests(req, res) {
-    const requests = await Request.findAll();
+    const requests = await BuyRequest.findAll();
     return res.json(requests);
   }
 }
 
-module.exports = new RequestController();
+module.exports = new BuyRequestController();

@@ -4,7 +4,7 @@ const ApiError = require("../error/ApiError");
 class UserController {
   async checkUser(req, res, next) {
     const { password } = req.body;
-    const user = await User.findOne({where: {password}});
+    const user = await User.findOne({ where: { password } });
     if (!user) {
       return next(ApiError.internalRequest("User not found"));
     }

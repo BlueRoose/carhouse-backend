@@ -36,8 +36,16 @@ const Request = sequelize.define("requests", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, allowNull: false },
   email: { type: DataTypes.STRING, allowNull: false },
-  subject: {type: DataTypes.STRING, allowNull: false},
+  subject: { type: DataTypes.STRING, allowNull: false },
   text: { type: DataTypes.STRING, allowNull: false },
+});
+
+const BuyRequest = sequelize.define("buy_requests", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  name: { type: DataTypes.STRING, allowNull: false },
+  email: { type: DataTypes.STRING, allowNull: false },
+  phone: { type: DataTypes.STRING, allowNull: false },
+  carId: { type: DataTypes.INTEGER, allowNull: false },
 });
 
 const TypeBrand = sequelize.define("type_brand", {
@@ -59,5 +67,6 @@ module.exports = {
   Brand,
   Type,
   Request,
+  BuyRequest,
   TypeBrand,
 };
