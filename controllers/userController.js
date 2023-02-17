@@ -13,7 +13,7 @@ class UserController {
 
   async createUser(req, res) {
     const { password, role } = req.body;
-    const user = await User.create({password, role});
+    const user = await User.create({ password, role });
 
     return res.json(user);
   }
