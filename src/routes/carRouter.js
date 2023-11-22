@@ -1,9 +1,11 @@
-const Router = require("express");
+import { Router } from "express";
+import CarController from "../controllers/carController";
+import AuthMiddleware from "../middlewares/authMiddleware.js";
+
 const router = new Router();
-const carController = require("../controllers/carController");
 
-router.post("/", carController.createCar);
-router.get("/", carController.getCars);
-router.get("/:id", carController.getOneCar);
+router.post("/create-car", AuthMiddleware, CarController.createCar);
+router.get("/get-cars", CarController.getCars);
+router.get("/get-car", CarController.getCar);
 
-module.exports = router;
+export default router;

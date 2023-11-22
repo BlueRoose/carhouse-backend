@@ -1,8 +1,10 @@
-const Router = require("express");
+import { Router } from "express";
+import TypeController from "../controllers/typeController.js";
+import AuthMiddleware from "../middlewares/authMiddleware.js";
+
 const router = new Router();
-const typeController = require("../controllers/typeController");
 
-router.post("/", typeController.createType);
-router.get("/", typeController.getTypes);
+router.post("/create-type", AuthMiddleware, TypeController.createType);
+router.get("/get-types", TypeController.getTypes);
 
-module.exports = router;
+export default router;

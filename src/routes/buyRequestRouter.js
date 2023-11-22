@@ -1,8 +1,10 @@
-const Router = require("express");
+import { Router } from "express";
+import BuyRequestController from "../controllers/buyRequestController";
+import AuthMiddleware from "../middlewares/authMiddleware.js";
+
 const router = new Router();
-const buyRequestController = require("../controllers/buyRequestController");
 
-router.post("/", buyRequestController.createRequest);
-router.get("/", buyRequestController.getRequests);
+router.post("/create-buy-request", AuthMiddleware, BuyRequestController.createBuyRequest);
+router.get("/get-buy-requests", AuthMiddleware, BuyRequestController.getBuyRequests);
 
-module.exports = router;
+export default router;

@@ -1,17 +1,27 @@
-const { Brand } = require("../models/models");
-const ApiError = require("../exceptions/apiError");
+import BrandService from "../services/brandService.js";
 
 class BrandController {
-  async createBrand(req, res) {
-    const { name } = req.body;
-    const brand = await Brand.create({ name });
-    return res.json(brand);
+  async createBrand(req, res, next) {
+    try {
+      const { name } = req.body;
+
+      const result = await BrandService.createBrand(name);
+  
+      return res.json(result);
+    } catch (error) {
+      next(error);
+    }
   }
 
-  async getBrands(req, res) {
-    const brands = await Brand.findAll();
-    return res.json(brands);
+  async getBrands(req, res, next) {
+    try {
+      const result = await BrandService.getBrands();
+
+      return res.json(result);
+    } catch (error) {
+      next(error);
+    }
   }
 }
 
-module.exports = new BrandController();
+export default new BrandController();

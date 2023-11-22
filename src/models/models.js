@@ -1,10 +1,18 @@
-const sequelize = require("../../db");
-const { DataTypes } = require("sequelize");
+import { DataTypes } from "sequelize";
+import sequelize from "../../db.js";
 
 const User = sequelize.define("user", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  name: { type: DataTypes.STRING, allowNull: false },
+  surname: { type: DataTypes.STRING, allowNull: false },
   email: { type: DataTypes.STRING, allowNull: false },
   role: { type: DataTypes.STRING, defaultValue: "USER" },
+});
+
+const Message = sequelize.define("message", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  email: { type: DataTypes.STRING, allowNull: false },
+  activationMessage: { type: DataTypes.STRING, allowNull: false },
 });
 
 const Car = sequelize.define("car", {
@@ -79,8 +87,9 @@ Car.belongsTo(FavouritedCar);
 Type.belongsToMany(Brand, { through: TypeBrand });
 Brand.belongsToMany(Type, { through: TypeBrand });
 
-module.exports = {
+export default {
   User,
+  Message,
   Car,
   Favourites,
   FavouritedCar,

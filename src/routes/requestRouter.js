@@ -1,8 +1,10 @@
-const Router = require("express");
+import { Router } from "express";
+import RequestController from "../controllers/requestController";
+import AuthMiddleware from "../middlewares/authMiddleware.js";
+
 const router = new Router();
-const requestController = require("../controllers/requestController");
 
-router.post("/", requestController.createRequest);
-router.get("/", requestController.getRequests);
+router.post("/create-request", AuthMiddleware, RequestController.createRequest);
+router.get("/get-requests", AuthMiddleware, RequestController.getRequests);
 
-module.exports = router;
+export default router;

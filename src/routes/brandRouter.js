@@ -1,8 +1,10 @@
-const Router = require("express");
+import { Router } from "express";
+import BrandController from "../controllers/brandController.js";
+import AuthMiddleware from "../middlewares/authMiddleware.js";
+
 const router = new Router();
-const brandController = require("../controllers/brandController");
 
-router.post("/", brandController.createBrand);
-router.get("/", brandController.getBrands);
+router.post("/create-brand", AuthMiddleware, BrandController.createBrand);
+router.get("/get-brands", BrandController.getBrands);
 
-module.exports = router;
+export default router;

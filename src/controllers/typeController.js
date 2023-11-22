@@ -1,17 +1,27 @@
-const { Type } = require("../models/models");
-const ApiError = require("../exceptions/apiError");
+import TypeService from "../services/typeService.js";
 
 class TypeController {
-  async createType(req, res) {
-    const { name } = req.body;
-    const type = await Type.create({ name });
-    return res.json(type);
+  async createType(req, res, next) {
+    try {
+      const { name } = req.body;
+
+      const result = await TypeService.createType(name);
+
+      return res.json(result);
+    } catch (error) {
+      next(error);
+    }
   }
 
-  async getTypes(req, res) {
-    const types = await Type.findAll();
-    return res.json(types);
+  async getTypes(req, res, next) {
+    try {
+      const result = await TypeService.getTypes();
+
+      return res.json(result);
+    } catch (error) {
+      next(error);
+    }
   }
 }
 
-module.exports = new TypeController();
+export default new TypeController();
