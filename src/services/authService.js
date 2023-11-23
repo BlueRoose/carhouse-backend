@@ -12,7 +12,7 @@ class AuthService {
       ]);
     }
 
-    const item = await Messagel.findOne({ where: { email } });
+    const item = await Message.findOne({ where: { email } });
 
     const activationMessage = Math.floor(
       Math.random() * (99999 - 10000 + 1) + 10000

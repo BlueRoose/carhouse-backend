@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../../db.js";
 
-const User = sequelize.define("user", {
+export const User = sequelize.define("user", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, allowNull: false },
   surname: { type: DataTypes.STRING, allowNull: false },
@@ -9,13 +9,13 @@ const User = sequelize.define("user", {
   role: { type: DataTypes.STRING, defaultValue: "USER" },
 });
 
-const Message = sequelize.define("message", {
+export const Message = sequelize.define("message", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   email: { type: DataTypes.STRING, allowNull: false },
   activationMessage: { type: DataTypes.STRING, allowNull: false },
 });
 
-const Car = sequelize.define("car", {
+export const Car = sequelize.define("car", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, allowNull: false },
   year: { type: DataTypes.INTEGER, allowNull: false },
@@ -30,25 +30,25 @@ const Car = sequelize.define("car", {
   img: { type: DataTypes.STRING, allowNull: false },
 });
 
-const Favourites = sequelize.define("favourites", {
+export const Favourites = sequelize.define("favourites", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
-const FavouritedCar = sequelize.define("favourited_car", {
+export const FavouritedCar = sequelize.define("favourited_car", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
-const Brand = sequelize.define("brand", {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  name: { type: DataTypes.STRING, allowNull: false },
-});
-
-const Type = sequelize.define("type", {
+export const Brand = sequelize.define("brand", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, allowNull: false },
 });
 
-const Request = sequelize.define("requests", {
+export const Type = sequelize.define("type", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  name: { type: DataTypes.STRING, allowNull: false },
+});
+
+export const Request = sequelize.define("requests", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, allowNull: false },
   email: { type: DataTypes.STRING, allowNull: false },
@@ -56,13 +56,13 @@ const Request = sequelize.define("requests", {
   text: { type: DataTypes.STRING, allowNull: false },
 });
 
-const BuyRequest = sequelize.define("buy_requests", {
+export const BuyRequest = sequelize.define("buy_requests", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   phone: { type: DataTypes.STRING, allowNull: false },
   carId: { type: DataTypes.INTEGER, allowNull: false },
 });
 
-const TypeBrand = sequelize.define("type_brand", {
+export const TypeBrand = sequelize.define("type_brand", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
@@ -86,16 +86,3 @@ Car.belongsTo(FavouritedCar);
 
 Type.belongsToMany(Brand, { through: TypeBrand });
 Brand.belongsToMany(Type, { through: TypeBrand });
-
-export default {
-  User,
-  Message,
-  Car,
-  Favourites,
-  FavouritedCar,
-  Brand,
-  Type,
-  Request,
-  BuyRequest,
-  TypeBrand,
-};
