@@ -90,7 +90,7 @@ class AuthService {
   }
 
   async getUser(user) {
-    const candidate = await UserModel.findOne({ where: { email: user.email } });
+    const candidate = await User.findOne({ where: { email: user.email } });
     if (!candidate) {
       throw ApiError.BadRequest(["Такого пользователя не существует"]);
     }
@@ -98,6 +98,22 @@ class AuthService {
 
     return {
       user: userDto,
+    };
+  }
+
+  async changeUserRole(candidateId, user) {
+    const candidate = await User.findOne({ where: { id: candidateId } });
+    if (candidate.role === "MODERATOR") {
+      throw ApiError.BadRequest(["Пользователь уже является модератором"]);
+    }
+
+    const author = await User.findOne({ where: { id: user.id } });
+    if (author.role === "ADMIN") {
+      await User.update({ role: "MODERATOR" }, { where: { id: candidateId } });
+    }
+
+    return {
+      success: true,
     };
   }
 }

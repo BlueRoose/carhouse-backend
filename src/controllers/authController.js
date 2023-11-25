@@ -79,6 +79,19 @@ class AuthController {
       next(error);
     }
   }
+
+  async changeUserRole(req, res, next) {
+    try {
+      const { id } = req.body;
+      const user = req.user;
+
+      const result = await AuthService.changeUserRole(id, user);
+
+      return res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default new AuthController();
