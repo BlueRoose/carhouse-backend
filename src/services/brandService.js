@@ -4,7 +4,7 @@ import ApiError from "../exceptions/apiError.js";
 
 class BrandService {
   async createBrand(name) {
-    const candidate = Brand.findOne({ where: { name } });
+    const candidate = await Brand.findOne({ where: { name } });
     if (candidate) {
       throw ApiError.BadRequest(["Такой бренд уже существует"]);
     }
@@ -19,7 +19,7 @@ class BrandService {
   }
 
   async getBrands() {
-    const brands = Brand.findAll();
+    const brands = await Brand.findAll();
 
     const brandsDto = brands.map((brand) => new BrandDto(brand));
 

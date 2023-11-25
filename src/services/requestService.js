@@ -16,7 +16,7 @@ class RequestService {
   }
 
   async getRequests() {
-    const requests = Request.findAll();
+    const requests = await Request.findAll();
 
     const requestsDto = requests.map((request) => new RequestDto(request));
 

@@ -6,7 +6,7 @@ class BrandController {
       const { name } = req.body;
 
       const result = await BrandService.createBrand(name);
-  
+
       return res.json(result);
     } catch (error) {
       next(error);

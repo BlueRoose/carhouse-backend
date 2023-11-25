@@ -16,7 +16,7 @@ class BuyRequestService {
   }
 
   async getBuyRequests() {
-    const buyRequests = BuyRequest.findAll();
+    const buyRequests = await BuyRequest.findAll();
 
     const buyRequestsDto = buyRequests.map(
       (buyRequest) => new BuyRequestDto(buyRequest)

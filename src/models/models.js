@@ -27,7 +27,7 @@ export const Car = sequelize.define("car", {
   horsePower: { type: DataTypes.INTEGER, allowNull: false },
   time: { type: DataTypes.DOUBLE, allowNull: false },
   rating: { type: DataTypes.DOUBLE, defaultValue: 0 },
-  img: { type: DataTypes.STRING, allowNull: false },
+  imgs: { type: DataTypes.ARRAY(DataTypes.STRING), allowNull: false },
 });
 
 export const Favourites = sequelize.define("favourites", {

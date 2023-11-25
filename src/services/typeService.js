@@ -4,7 +4,7 @@ import ApiError from "../exceptions/apiError.js";
 
 class TypeService {
   async createType(name) {
-    const candidate = Type.findOne({ where: { name } });
+    const candidate = await Type.findOne({ where: { name } });
     if (candidate) {
       throw ApiError.BadRequest(["Такой тип уже существует"]);
     }
@@ -19,7 +19,7 @@ class TypeService {
   }
 
   async getTypes() {
-    const types = Type.findAll();
+    const types = await Type.findAll();
 
     const typesDto = types.map((type) => new TypeDto(type));
 
