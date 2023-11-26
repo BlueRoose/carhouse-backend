@@ -62,6 +62,30 @@ class CarController {
       next(error);
     }
   }
+
+  async addToFavourites(req, res, next) {
+    try {
+      const { userId, carId } = req.body;
+
+      const result = await CarService.addToFavourites(userId, carId);
+
+      return res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getUsersFavourites(req, res, next) {
+    try {
+      const { userId } = req.body;
+
+      const result = await CarService.getUsersFavourites(userId);
+
+      return res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default new CarController();

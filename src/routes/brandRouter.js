@@ -1,10 +1,10 @@
 import { Router } from "express";
 import BrandController from "../controllers/brandController.js";
-import AuthMiddleware from "../middlewares/authMiddleware.js";
+import RoleMiddleware from "../middlewares/roleMiddleware.js";
 
 const router = new Router();
 
-router.post("/create-brand", AuthMiddleware, BrandController.createBrand);
+router.post("/create-brand", RoleMiddleware, BrandController.createBrand);
 router.get("/get-brands", BrandController.getBrands);
 
 export default router;

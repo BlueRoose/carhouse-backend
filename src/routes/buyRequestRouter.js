@@ -1,17 +1,17 @@
 import { Router } from "express";
 import BuyRequestController from "../controllers/buyRequestController.js";
-import AuthMiddleware from "../middlewares/authMiddleware.js";
+import RoleMiddleware from "../middlewares/roleMiddleware.js";
 
 const router = new Router();
 
 router.post(
   "/create-buy-request",
-  AuthMiddleware,
+  RoleMiddleware,
   BuyRequestController.createBuyRequest
 );
 router.get(
   "/get-buy-requests",
-  AuthMiddleware,
+  RoleMiddleware,
   BuyRequestController.getBuyRequests
 );
 

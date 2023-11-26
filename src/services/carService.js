@@ -2,8 +2,9 @@ import { v4 } from "uuid";
 import path from "path";
 import { fileURLToPath } from "url";
 import CarDto from "../dtos/carDto.js";
-import { Car } from "../models/models.js";
+import { User, Car } from "../models/models.js";
 import cloudinary from "../utils/upload.js";
+import ApiError from "../exceptions/apiError.js";
 
 class CarService {
   async createCar(data) {
@@ -44,6 +45,45 @@ class CarService {
 
     return {
       car: carDto,
+    };
+  }
+
+  async addToFavourites(userId, carId) {
+    const user = User.findByPk(userId);
+    if (!user) {
+      throw ApiError.BadRequest(["Такого пользователя не существует"]);
+    }
+
+    const car = Car.findByPk(carId);
+    if (!car) {
+      throw ApiError.BadRequest(["Такого автомобиля не существует"]);
+    }
+
+    let favourites = await user.getFavourites();
+    if (!favourites) {
+      favourites = await user.createFavourites();
+    }
+
+    const favouritedCar = await favourites.createFavouritedCar();
+    await favouritedCar.setCar(car);
+
+    return {
+      success: true,
+    };
+  }
+
+  async getUsersFavourites(userId) {
+    const user = User.findByPk(userId);
+    if (!user) {
+      throw ApiError.BadRequest(["Такого пользователя не существует"]);
+    }
+
+    let favourites = await user.getFavourites();
+
+    const favouritesDto = favourites.map((favourite) => new CarDto(favourite));
+
+    return {
+      favourites: favouritesDto,
     };
   }
 }
