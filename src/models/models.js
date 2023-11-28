@@ -27,6 +27,7 @@ export const Car = sequelize.define("car", {
   horsePower: { type: DataTypes.INTEGER, allowNull: false },
   time: { type: DataTypes.DOUBLE, allowNull: false },
   rating: { type: DataTypes.DOUBLE, defaultValue: 0 },
+  status: { type: DataTypes.STRING, defaultValue: "ДОСТУПНО"},
   imgs: { type: DataTypes.ARRAY(DataTypes.STRING), allowNull: false },
 });
 

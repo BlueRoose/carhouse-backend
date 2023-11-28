@@ -11,7 +11,8 @@ export default class BrandDto {
   time;
   brandId;
   typeId;
-  img;
+  imgs;
+  status;
   id;
 
   constructor(model) {
@@ -27,7 +28,8 @@ export default class BrandDto {
     this.time = model.time;
     this.brandId = model.brandId;
     this.typeId = model.typeId;
-    this.img = model.img;
+    this.imgs = model.imgs;
+    this.status = model.status;
     this.id = model.id;
   }
 }

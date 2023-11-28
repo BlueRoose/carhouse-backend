@@ -1,5 +1,5 @@
 import UserDto from "./userDto.js";
-// import CarDto from "./carDto.js";
+import CarDto from "./carDto.js";
 
 export default class BrandDto {
   phone;
@@ -10,7 +10,7 @@ export default class BrandDto {
   constructor(model) {
     this.phone = model.phone;
     this.user = new UserDto(model.user);
-    // this.car = new CarDto(model.car);
+    this.car = new CarDto(model.car);
     this.id = model.id;
   }
 }

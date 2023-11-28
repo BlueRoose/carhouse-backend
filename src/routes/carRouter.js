@@ -1,5 +1,5 @@
 import { Router } from "express";
-import CarController from "../controllers/carController";
+import CarController from "../controllers/carController.js";
 import RoleMiddleware from "../middlewares/roleMiddleware.js";
 import AuthMiddleware from "../middlewares/authMiddleware.js";
 

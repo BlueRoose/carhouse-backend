@@ -17,9 +17,9 @@ class CarController {
         brandId,
         typeId,
       } = req.body;
-      const files = Object.values(req.files);
+      const files = Object.values(req.files)[0];
 
-      const result = await CarService.createCar(
+      const result = await CarService.createCar({
         name,
         year,
         price,
@@ -32,8 +32,8 @@ class CarController {
         time,
         brandId,
         typeId,
-        files
-      );
+        files,
+      });
 
       return res.json(result);
     } catch (error) {

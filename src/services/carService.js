@@ -13,9 +13,9 @@ class CarService {
       const __filename = fileURLToPath(import.meta.url);
       const __dirname = path.dirname(__filename);
       let fileName = `${v4()}.jpg`;
-      await file.mv(path.resolve(__dirname, "..", "static", fileName));
+      await file.mv(path.resolve(__dirname, "../..", "static", fileName));
       const cloudinaryResult = await cloudinary.uploader.upload(
-        `src/static/${fileName}`
+        `static/${fileName}`
       );
       files.push(cloudinaryResult.secure_url);
     }
