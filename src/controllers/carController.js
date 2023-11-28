@@ -77,7 +77,7 @@ class CarController {
 
   async getUsersFavourites(req, res, next) {
     try {
-      const { userId } = req.body;
+      const { userId } = req.query;
 
       const result = await CarService.getUsersFavourites(userId);
 

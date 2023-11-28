@@ -2,7 +2,7 @@ import { v4 } from "uuid";
 import path from "path";
 import { fileURLToPath } from "url";
 import CarDto from "../dtos/carDto.js";
-import { User, Car } from "../models/models.js";
+import { User, Car, Favourites, FavouritedCar } from "../models/models.js";
 import cloudinary from "../utils/upload.js";
 import ApiError from "../exceptions/apiError.js";
 
@@ -49,23 +49,34 @@ class CarService {
   }
 
   async addToFavourites(userId, carId) {
-    const user = User.findByPk(userId);
+    const user = await User.findByPk(userId);
     if (!user) {
       throw ApiError.BadRequest(["Такого пользователя не существует"]);
     }
 
-    const car = Car.findByPk(carId);
+    const car = await Car.findByPk(carId);
     if (!car) {
       throw ApiError.BadRequest(["Такого автомобиля не существует"]);
     }
 
-    let favourites = await user.getFavourites();
-    if (!favourites) {
-      favourites = await user.createFavourites();
+    const favouritedCar = await FavouritedCar.create();
+
+    // Get the Favourites instance associated with the user
+    const favouritesInstance = await Favourites.findOne({ where: { userId: user.id } });
+
+    if (!favouritesInstance) {
+      // If the user doesn't have a favorites instance, create one
+      const newFavouritesInstance = await Favourites.create({ userId: user.id });
+      
+      // Associate the FavouritedCar with the Favourites instance
+      await FavouritedCar.update({ favouriteId: newFavouritesInstance.id }, { where: { id: favouritedCar.id } });
+    } else {
+      // Associate the FavouritedCar with the existing Favourites instance
+      await FavouritedCar.update({ favouriteId: favouritesInstance.id }, { where: { id: favouritedCar.id } });
     }
 
-    const favouritedCar = await favourites.createFavouritedCar();
-    await favouritedCar.setCar(car);
+    // Associate the car with the FavouritedCar
+    await Car.update({ favouritedCarId: favouritedCar.id }, { where: { id: carId } });
 
     return {
       success: true,
@@ -73,17 +84,25 @@ class CarService {
   }
 
   async getUsersFavourites(userId) {
-    const user = User.findByPk(userId);
+    const user = await User.findByPk(userId);
     if (!user) {
       throw ApiError.BadRequest(["Такого пользователя не существует"]);
     }
 
-    let favourites = await user.getFavourites();
+    const favouritedCars = [];
 
-    const favouritesDto = favourites.map((favourite) => new CarDto(favourite));
+    const favourites = await Favourites.findOne({ where: { userId } });
+    
+    const usersFavouritedCars = await FavouritedCar.findAll({ where: { favouriteId: favourites.id } });
+    
+    for (const favourite of usersFavouritedCars) {
+      const car = await Car.findOne({ where: { favouritedCarId: favourite.id } });
+      const carDto = new CarDto(car);
+      favouritedCars.push(carDto);
+    }
 
     return {
-      favourites: favouritesDto,
+      favouritedCars
     };
   }
 }

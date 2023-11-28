@@ -1,4 +1,4 @@
-export default class BrandDto {
+export default class CarDto {
   name;
   year;
   price;
