@@ -3,14 +3,14 @@ import CarDto from "./carDto.js";
 
 export default class BrandDto {
   phone;
-  user;
-  car;
+  userId;
+  carId;
   id;
 
   constructor(model) {
     this.phone = model.phone;
-    this.user = new UserDto(model.user);
-    this.car = new CarDto(model.car);
+    this.userId = model.userId;
+    this.carId = model.carId;
     this.id = model.id;
   }
 }
