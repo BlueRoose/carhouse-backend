@@ -17,7 +17,7 @@ export default class CarDto {
 
   constructor(model) {
     this.name = model.name;
-    this.year = model.yaer;
+    this.year = model.year;
     this.price = model.price;
     this.color = model.color;
     this.transmission = model.transmission;
