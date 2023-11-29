@@ -75,6 +75,18 @@ class CarController {
     }
   }
 
+  async removeFromFavourites(req, res, next) {
+    try {
+      const { userId, carId } = req.body;
+
+      const result = await CarService.removeFromFavourites(userId, carId);
+
+      return res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async getUsersFavourites(req, res, next) {
     try {
       const { userId } = req.query;

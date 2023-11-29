@@ -61,23 +61,40 @@ class CarService {
 
     const favouritedCar = await FavouritedCar.create();
 
-    // Get the Favourites instance associated with the user
     const favouritesInstance = await Favourites.findOne({ where: { userId: user.id } });
 
     if (!favouritesInstance) {
-      // If the user doesn't have a favorites instance, create one
       const newFavouritesInstance = await Favourites.create({ userId: user.id });
       
-      // Associate the FavouritedCar with the Favourites instance
       await FavouritedCar.update({ favouriteId: newFavouritesInstance.id }, { where: { id: favouritedCar.id } });
     } else {
-      // Associate the FavouritedCar with the existing Favourites instance
       await FavouritedCar.update({ favouriteId: favouritesInstance.id }, { where: { id: favouritedCar.id } });
     }
 
-    // Associate the car with the FavouritedCar
     await Car.update({ favouritedCarId: favouritedCar.id }, { where: { id: carId } });
 
+    return {
+      success: true,
+    };
+  }
+
+  async removeFromFavourites(userId, carId) {
+    const user = await User.findByPk(userId);
+    if (!user) {
+      throw ApiError.BadRequest(["Такого пользователя не существует"]);
+    }
+  
+    const car = await Car.findByPk(carId);
+    if (!car) {
+      throw ApiError.BadRequest(["Такого автомобиля не существует"]);
+    }
+
+    const favouritedCarId = car.favouritedCarId;
+
+    await FavouritedCar.destroy({ where: { id: favouritedCarId } });
+
+    await Car.update({ favouritedCarId: null }, { where: { id: carId } });
+  
     return {
       success: true,
     };
