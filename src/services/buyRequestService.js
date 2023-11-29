@@ -1,17 +1,17 @@
 import BuyRequestDto from "../dtos/buyRequestDto.js";
 import MailService from "./mailService.js";
-import { BuyRequest } from "../models/models.js";
+import { BuyRequest, Car } from "../models/models.js";
 
 class BuyRequestService {
   async createBuyRequest(userId, phone, carId) {
     const buyRequest = await BuyRequest.create({ userId, phone, carId });
 
-    const buyRequestDto = new BuyRequestDto(buyRequest);
+    await Car.update({ status: "ЗАКАЗАНО" }, { where: { id: carId } });
 
     await MailService.sendConfirmingMail();
 
     return {
-      buyRequest: buyRequestDto,
+      success: true,
     };
   }
 
