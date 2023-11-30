@@ -13,6 +13,7 @@ export default class CarDto {
   typeId;
   imgs;
   status;
+  buyRequestId;
   id;
 
   constructor(model) {
@@ -30,6 +31,7 @@ export default class CarDto {
     this.typeId = model.typeId;
     this.imgs = model.imgs;
     this.status = model.status;
+    this.buyRequestId = model.buyRequestId;
     this.id = model.id;
   }
 }

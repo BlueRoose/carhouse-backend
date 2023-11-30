@@ -17,7 +17,13 @@ class CarController {
         brandId,
         typeId,
       } = req.body;
-      const files = Object.values(req.files)[0];
+      let files;
+      console.log(Object.values(req.files));
+      if (req.files === null) {
+        files = [];
+      } else {
+        files = Object.values(req.files);
+      }
 
       const result = await CarService.createCar({
         name,

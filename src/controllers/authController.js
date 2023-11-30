@@ -7,11 +7,7 @@ class AuthController {
       const { email } = req.body;
       const { success, activationMessage } = await AuthService.preSignUp(email);
 
-      await MailService.sendActivationMail(
-        email,
-        "Для активации Вашего аккаунта введите код, приведенный ниже:",
-        activationMessage
-      );
+      await MailService.sendActivationMail(email);
 
       return res.json({ success });
     } catch (error) {
@@ -43,12 +39,7 @@ class AuthController {
         email
       );
 
-      await MailService.sendActivationMail(
-        email,
-        "Для активации Вашего аккаунта введите код, приведенный ниже:",
-        activationMessage,
-        name
-      );
+      await MailService.sendActivationMail(email);
 
       return res.json({ success });
     } catch (error) {

@@ -8,7 +8,7 @@ class RequestService {
 
     const requestDto = new RequestDto(request);
 
-    await MailService.sendConfirmingMail();
+    await MailService.sendConfirmingMail(email);
 
     return {
       request: requestDto,

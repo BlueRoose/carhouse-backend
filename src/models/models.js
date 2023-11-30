@@ -59,8 +59,7 @@ export const Request = sequelize.define("requests", {
 
 export const BuyRequest = sequelize.define("buy_requests", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  phone: { type: DataTypes.STRING, allowNull: false },
-  carId: { type: DataTypes.INTEGER, allowNull: false },
+  phone: { type: DataTypes.STRING, allowNull: false }
 });
 
 export const TypeBrand = sequelize.define("type_brand", {
@@ -75,6 +74,9 @@ Car.belongsTo(Brand);
 
 User.hasMany(BuyRequest);
 BuyRequest.belongsTo(User);
+
+BuyRequest.hasOne(Car);
+Car.hasOne(BuyRequest);
 
 User.hasOne(Favourites);
 Favourites.belongsTo(User);
