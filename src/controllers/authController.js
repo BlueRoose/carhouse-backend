@@ -7,7 +7,7 @@ class AuthController {
       const { email } = req.body;
       const { success, activationMessage } = await AuthService.preSignUp(email);
 
-      await MailService.sendActivationMail(email);
+      await MailService.sendActivationMail(email, activationMessage);
 
       return res.json({ success });
     } catch (error) {
@@ -39,7 +39,7 @@ class AuthController {
         email
       );
 
-      await MailService.sendActivationMail(email);
+      await MailService.sendActivationMail(email, activationMessage);
 
       return res.json({ success });
     } catch (error) {

@@ -28,6 +28,19 @@ class CarService {
     };
   }
 
+  async deleteCar(carId) {
+    const candidate = await Car.findByPk(carId);
+    if (!candidate) {
+      throw ApiError.BadRequest(["Такого автомобиля не существует"]);
+    }
+
+    await Car.destroy({ where: { id: carId } });
+
+    return {
+      success: true
+    };
+  }
+
   async getCars() {
     const cars = await Car.findAll();
 

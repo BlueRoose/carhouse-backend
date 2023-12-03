@@ -1,6 +1,7 @@
 import RequestDto from "../dtos/requestDto.js";
 import MailService from "./mailService.js";
 import { Request } from "../models/models.js";
+import ApiError from "../exceptions/apiError.js";
 
 class RequestService {
   async createRequest(name, email, subject, text) {
@@ -12,6 +13,19 @@ class RequestService {
 
     return {
       request: requestDto,
+    };
+  }
+
+  async deleteRequest(id) {
+    const candidate = await Request.findByPk(id);
+    if (!candidate) {
+      throw ApiError.BadRequest(["Такого запроса не существует"]);
+    }
+
+    await Request.destroy({ where: { id } });
+
+    return {
+      success: true
     };
   }
 

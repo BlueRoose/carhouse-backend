@@ -1,6 +1,7 @@
 import BuyRequestDto from "../dtos/buyRequestDto.js";
 import MailService from "./mailService.js";
 import { User, BuyRequest, Car } from "../models/models.js";
+import ApiError from "../exceptions/apiError.js";
 
 class BuyRequestService {
   async createBuyRequest(userId, phone, carId) {
@@ -14,6 +15,19 @@ class BuyRequestService {
 
     return {
       success: true,
+    };
+  }
+
+  async deleteBuyRequest(id) {
+    const candidate = await BuyRequest.findByPk(id);
+    if (!candidate) {
+      throw ApiError.BadRequest(["Такого запроса не существует"]);
+    }
+
+    await BuyRequest.destroy({ where: { id } });
+
+    return {
+      success: true
     };
   }
 

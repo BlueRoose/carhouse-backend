@@ -18,6 +18,18 @@ class RequestController {
     }
   }
 
+  async deleteRequest(req, res, next) {
+    try {
+      const { id } = req.body;
+
+      const result = await RequestService.deleteRequest(id);
+
+      return res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async getRequests(req, res) {
     try {
       const result = await RequestService.getRequests();

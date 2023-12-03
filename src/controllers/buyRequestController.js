@@ -17,6 +17,18 @@ class BuyRequestController {
     }
   }
 
+  async deleteBuyRequest(req, res, next) {
+    try {
+      const { id } = req.body;
+
+      const result = await BuyRequestService.deleteBuyRequest(id);
+
+      return res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async getBuyRequests(req, res, next) {
     try {
       const result = await BuyRequestService.getBuyRequests();

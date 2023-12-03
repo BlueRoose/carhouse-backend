@@ -47,6 +47,18 @@ class CarController {
     }
   }
 
+  async deleteCar(req, res, next) {
+    try {
+      const { carId } = req.body;
+
+      const result = await CarService.deleteCar(carId);
+
+      return res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async getCars(req, res, next) {
     try {
       const result = await CarService.getCars();

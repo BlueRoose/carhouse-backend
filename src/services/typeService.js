@@ -18,6 +18,32 @@ class TypeService {
     };
   }
 
+  async updateType(typeId, name) {
+    const candidate = await Type.findByPk(typeId);
+    if (!candidate) {
+      throw ApiError.BadRequest(["Такого типа не существует"]);
+    }
+
+    await Type.update({ name }, { where: { id: typeId } });
+
+    return {
+      success: true
+    };
+  }
+
+  async deleteType(typeId) {
+    const candidate = await Type.findByPk(typeId);
+    if (!candidate) {
+      throw ApiError.BadRequest(["Такого типа не существует"]);
+    }
+
+    await Type.destroy({ where: { id: typeId } });
+
+    return {
+      success: true
+    };
+  }
+
   async getTypes() {
     const types = await Type.findAll();
 

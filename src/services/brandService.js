@@ -18,6 +18,32 @@ class BrandService {
     };
   }
 
+  async updateBrand(brandId, name) {
+    const candidate = await Brand.findByPk(brandId);
+    if (!candidate) {
+      throw ApiError.BadRequest(["Такого бренда не существует"]);
+    }
+
+    await Brand.update({ name }, { where: { id: brandId } });
+
+    return {
+      success: true
+    };
+  }
+
+  async deleteBrand(brandId) {
+    const candidate = await Brand.findByPk(brandId);
+    if (!candidate) {
+      throw ApiError.BadRequest(["Такого бренда не существует"]);
+    }
+
+    await Brand.destroy({ where: { id: brandId } });
+
+    return {
+      success: true
+    };
+  }
+
   async getBrands() {
     const brands = await Brand.findAll();
 

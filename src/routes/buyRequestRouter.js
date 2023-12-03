@@ -9,6 +9,11 @@ router.post(
   RoleMiddleware,
   BuyRequestController.createBuyRequest
 );
+router.delete(
+  "/delete-buy-request",
+  RoleMiddleware,
+  BuyRequestController.deleteBuyRequest
+);
 router.get(
   "/get-buy-requests",
   RoleMiddleware,
